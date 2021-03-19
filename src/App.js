@@ -67,11 +67,11 @@ function App() {
             onChange={(e) => setEdgeLength(e.target.value)} className="slider" 
             id="edge-length-slider" name='edge-length'/>
         <label htmlFor='left-length-multiplier'>leftLengthMultiplier: {leftLengthMultiplier}</label>
-        <input type="range" min="0.10" max="1.00" step="0.05" value={leftLengthMultiplier} 
+        <input type="range" min="0.25" max="0.95" step="0.05" value={leftLengthMultiplier} 
                 onChange={(e) => setLeftLengthMultiplier(e.target.value)} className="slider" 
                 id="left-length-multiplier" name='left-length-multiplier'/>
         <label htmlFor='right-length-multiplier'>rightLengthMultiplier: {rightLengthMultiplier}</label>
-        <input type="range" min="0.10" max="1.00" step="0.05" value={rightLengthMultiplier} 
+        <input type="range" min="0.25" max="0.95" step="0.05" value={rightLengthMultiplier} 
                 onChange={(e) => setRightLengthMultiplier(e.target.value)} className="slider" 
                 id="right-length-multiplier" name='right-length-multiplier'/>
         <label htmlFor='angle-increment'>angleIncrement: {angleIncrement}</label>
