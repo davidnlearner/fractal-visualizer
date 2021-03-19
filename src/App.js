@@ -1,8 +1,8 @@
-import logo from './logo.svg';
 import './App.css';
 import { useRef, useState, useEffect } from 'react';
 
-const drawTree = ({ctx, startX=300, startY=520, edgeLength=120, lengthMulitplier=0.75, angle=0, angleIncrement=5, branchWidth=2, mainColor='rgb(78, 43, 15)', secondaryColor='green'}) => {
+const drawTree = ({ctx, startX=300, startY=520, edgeLength=120, leftLengthMultiplier=0.75, rightLengthMultiplier=0.75, angle=0, angleIncrement=10, branchWidth=2, mainColor='#4e2b0f', secondaryColor='green', stepCounter=0}) => {
+  stepCounter += 1;
   ctx.beginPath();
   ctx.save();
   ctx.strokeStyle = mainColor;
@@ -14,13 +14,13 @@ const drawTree = ({ctx, startX=300, startY=520, edgeLength=120, lengthMulitplier
   ctx.lineTo(0, -edgeLength);
   ctx.stroke();
 
-  if (edgeLength < 10) {
+  if (edgeLength < 10 || stepCounter > 10) {
       ctx.restore();
       return;
   } 
   else {
-      drawTree({ctx, startX: 0, startY: -edgeLength, edgeLength: edgeLength * 0.75, lengthMulitplier, angle: angle + angleIncrement, angleIncrement, branchWidth, mainColor, secondaryColor});
-      drawTree({ctx, startX: 0, startY: -edgeLength, edgeLength: edgeLength * 0.75, lengthMulitplier, angle: angle - angleIncrement, angleIncrement, branchWidth, mainColor, secondaryColor});
+      drawTree({ctx, startX: 0, startY: -edgeLength, edgeLength: edgeLength * rightLengthMultiplier, leftLengthMultiplier, rightLengthMultiplier, angle: angle + angleIncrement, angleIncrement, branchWidth, mainColor, secondaryColor, stepCounter});
+      drawTree({ctx, startX: 0, startY: -edgeLength, edgeLength: edgeLength * leftLengthMultiplier, leftLengthMultiplier, rightLengthMultiplier, angle: angle - angleIncrement, angleIncrement, branchWidth, mainColor, secondaryColor, stepCounter});
 
       ctx.restore();
   }
@@ -35,6 +35,9 @@ function App() {
   const [startY, setStartY] = useState(window.innerHeight - 80);
   
   const [edgeLength, setEdgeLength] = useState(120);
+  const [leftLengthMultiplier, setLeftLengthMultiplier] = useState(0.75);
+  const [rightLengthMultiplier, setRightLengthMultiplier] = useState(0.75);
+  const [angleIncrement, setAngleIncrement] = useState(5);
   const [branchWidth, setBranchWidth] = useState(2);
   const [mainColor, setMainColor] = useState('#4e2b0f');
 
@@ -44,9 +47,9 @@ function App() {
     const ctx = canvasElement.current.getContext('2d');
 
     ctx.clearRect(0, 0, canvasElement.current.width, canvasElement.current.height);
-    drawTree({ ctx, startX, startY, edgeLength, branchWidth, mainColor });
+    drawTree({ ctx, startX, startY, edgeLength, leftLengthMultiplier, rightLengthMultiplier, angleIncrement: parseInt(angleIncrement), branchWidth, mainColor });
 
-  }, [startX, startY, edgeLength, branchWidth, mainColor])
+  }, [startX, startY, edgeLength, leftLengthMultiplier, rightLengthMultiplier, angleIncrement, branchWidth, mainColor])
 
 
   window.addEventListener('resize', () => {
@@ -59,15 +62,30 @@ function App() {
   return (
     <div>
       <div className="slide-container">
-        <label htmlFor='edge-length'>{edgeLength}</label>
+        <label htmlFor='edge-length'>edgeLength: {edgeLength}</label>
         <input type="range" min="50" max="300" value={edgeLength} 
-            onChange={(e) => setEdgeLength(e.target.value)} className="slider" id="edge-length-slider" name='edge-length'/>
-        <label htmlFor='branch-width'>{branchWidth}</label>
+            onChange={(e) => setEdgeLength(e.target.value)} className="slider" 
+            id="edge-length-slider" name='edge-length'/>
+        <label htmlFor='left-length-multiplier'>leftLengthMultiplier: {leftLengthMultiplier}</label>
+        <input type="range" min="0.10" max="1.00" step="0.05" value={leftLengthMultiplier} 
+                onChange={(e) => setLeftLengthMultiplier(e.target.value)} className="slider" 
+                id="left-length-multiplier" name='left-length-multiplier'/>
+        <label htmlFor='right-length-multiplier'>rightLengthMultiplier: {rightLengthMultiplier}</label>
+        <input type="range" min="0.10" max="1.00" step="0.05" value={rightLengthMultiplier} 
+                onChange={(e) => setRightLengthMultiplier(e.target.value)} className="slider" 
+                id="right-length-multiplier" name='right-length-multiplier'/>
+        <label htmlFor='angle-increment'>angleIncrement: {angleIncrement}</label>
+        <input type="range" min="1" max="20" value={angleIncrement} 
+            onChange={(e) => setAngleIncrement(e.target.value)} className="slider" 
+            id="angle-increment-slider" name='angle-increment'/>
+        <label htmlFor='branch-width'>branchWidth: {branchWidth}</label>
         <input type="range" min="1" max="10" value={branchWidth} 
-            onChange={(e) => setBranchWidth(e.target.value)} className="slider" id="branch-width-slider" name='branch-width'/>
-        <label htmlFor='main-color'>{mainColor}</label>
+            onChange={(e) => setBranchWidth(e.target.value)} className="slider" 
+            id="branch-width-slider" name='branch-width'/>
+        <label htmlFor='main-color'>mainColor: {mainColor}</label>
         <input type="color" value={mainColor} 
-                onChange={(e) => setMainColor(e.target.value)} className="slider" id="main-color-slider" name='main-color'/>
+                onChange={(e) => setMainColor(e.target.value)} className="slider" 
+                id="main-color-slider" name='main-color'/>
         
 
       </div>
