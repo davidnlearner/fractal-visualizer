@@ -15,17 +15,16 @@ const drawTree = ({ctx, startX=300, startY=520, edgeLength=120, leftLengthMultip
   ctx.stroke();
 
   stepCounter += 1;
-  if (edgeLength < 10 || stepCounter > 4) {
+
+  if (edgeLength < 10 || stepCounter > 8) {
       ctx.restore();
       return;
   } 
   else {
-    for (let i = -angleIncrement * (branchNumber-1)/2; i <= angleIncrement * (branchNumber-1)/2; i += angleIncrement) {
-      drawTree({ctx, startX: 0, startY: -edgeLength, edgeLength: edgeLength * rightLengthMultiplier, leftLengthMultiplier, rightLengthMultiplier, angle: angle + i, angleIncrement, branchWidth, mainColor, secondaryColor, stepCounter, branchNumber});
+    for (let i = 0; i <= angleIncrement * (branchNumber-1)/2; i += angleIncrement) {
+      drawTree({ctx, startX: 0, startY: -edgeLength, edgeLength: edgeLength * rightLengthMultiplier, leftLengthMultiplier, rightLengthMultiplier, angle: angle + i, angleIncrement, branchWidth, mainColor, secondaryColor, stepCounter});
+      drawTree({ctx, startX: 0, startY: -edgeLength, edgeLength: edgeLength * leftLengthMultiplier, leftLengthMultiplier, rightLengthMultiplier, angle: angle - i, angleIncrement, branchWidth, mainColor, secondaryColor, stepCounter});
     }
-    //  drawTree({ctx, startX: 0, startY: -edgeLength, edgeLength: edgeLength * rightLengthMultiplier, leftLengthMultiplier, rightLengthMultiplier, angle: angle + angleIncrement, angleIncrement, branchWidth, mainColor, secondaryColor, stepCounter});
-    //  drawTree({ctx, startX: 0, startY: -edgeLength, edgeLength: edgeLength * leftLengthMultiplier, leftLengthMultiplier, rightLengthMultiplier, angle: angle - angleIncrement, angleIncrement, branchWidth, mainColor, secondaryColor, stepCounter});
-
       ctx.restore();
   }
 
@@ -80,7 +79,7 @@ function App() {
                 onChange={(e) => setRightLengthMultiplier(e.target.value)} className="slider" 
                 id="right-length-multiplier" name='right-length-multiplier'/>
         <label htmlFor='angle-increment'>angleIncrement: {angleIncrement}</label>
-        <input type="range" min="1" max="360" value={angleIncrement} 
+        <input type="range" min="1" max="180" value={angleIncrement} 
             onChange={(e) => setAngleIncrement(e.target.value)} className="slider" 
             id="angle-increment-slider" name='angle-increment'/>
         <label htmlFor='branch-width'>branchWidth: {branchWidth}</label>
