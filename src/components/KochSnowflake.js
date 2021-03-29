@@ -51,7 +51,7 @@ function KochSnowflake() {
 
   
   const { width, height, startX, startY, edgeLength, lineWidth,
-    mainColor } = useContext(FractalContext);
+    mainColor, limit } = useContext(FractalContext);
   
 
   let startingPoints = {
@@ -73,7 +73,7 @@ function KochSnowflake() {
 
   useEffect(() => {
     const ctx = canvasElement.current.getContext('2d');
-    console.log("X: " + startX + " Y: " + startY)
+
     startingPoints = {
       p1: {
         x: 0,
@@ -88,9 +88,6 @@ function KochSnowflake() {
         y: 2 * edgeLength / 3
       }
     }
-    console.log("Start points p1: ( " + startingPoints.p1.x + ", " + startingPoints.p1.y + " ), ( "
-     + startingPoints.p2.x + ", " + startingPoints.p2.y + " ), ( " 
-     + startingPoints.p3.x + ", " + startingPoints.p3.y + " )");
 
     ctx.clearRect(0, 0, canvasElement.current.width, canvasElement.current.height);
 
@@ -103,11 +100,11 @@ function KochSnowflake() {
     //ctx.rotate(angle * Math.PI / 180);
     ctx.moveTo(0, 0);
 
-    drawSnowflake({ctx, startPoint: startingPoints.p1, endPoint: startingPoints.p2, lineWidth, mainColor})
-    drawSnowflake({ctx, startPoint: startingPoints.p2, endPoint: startingPoints.p3, lineWidth, mainColor})
-    drawSnowflake({ctx, startPoint: startingPoints.p3, endPoint: startingPoints.p1, lineWidth, mainColor})
+    drawSnowflake({ctx, startPoint: startingPoints.p1, endPoint: startingPoints.p2, lineWidth, mainColor, limit})
+    drawSnowflake({ctx, startPoint: startingPoints.p2, endPoint: startingPoints.p3, lineWidth, mainColor, limit})
+    drawSnowflake({ctx, startPoint: startingPoints.p3, endPoint: startingPoints.p1, lineWidth, mainColor, limit})
 
-  }, [startX, startY, edgeLength, lineWidth, mainColor])
+  }, [startX, startY, edgeLength, lineWidth, mainColor, limit])
 
   return (
     <div className="canvas-wrapper">

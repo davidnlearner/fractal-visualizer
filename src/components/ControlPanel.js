@@ -21,6 +21,10 @@ const ControlPanel = () => {
             <input type="range" min="1" max="10" value={context.lineWidth}
                 onChange={(e) => context.setLineWidth(e.target.value)} className="slider"
                 id="line-width-slider" name='line-width' />
+            <label htmlFor='limit'>Recursions: {context.limit}</label>
+            <input type="range" min="0" max="8" value={context.limit}
+                onChange={(e) => context.setLimit(e.target.value)} className="slider"
+                id="limit-slider" name='limit' />
 
             { mode === 'tree' &&
                 <>

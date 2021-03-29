@@ -9,7 +9,7 @@ import { FractalContext } from "../FractalContext";
 const App = () => {
     const [width, setWidth] = useState(window.innerWidth);
     const [height, setHeight] = useState(window.innerHeight);
-    const [startX, setStartX] = useState(window.innerWidth/3);
+    const [startX, setStartX] = useState(window.innerWidth/2);
     const [startY, setStartY] = useState(window.innerHeight/2);
 
     const [drawX, setDrawX] = useState(window.innerWidth/3);
@@ -22,6 +22,7 @@ const App = () => {
     const [lineWidth, setLineWidth] = useState(2);
     const [mainColor, setMainColor] = useState('#4e2b0f');
     const [branchNumber, setBranchNumber] = useState(2);
+    const [limit, setLimit] = useState(2);
 
 
     
@@ -29,7 +30,7 @@ const App = () => {
         setWidth(window.innerWidth);
         setHeight(window.innerHeight);
         setStartX(window.innerWidth/2);
-        setStartY(window.innerHeight - 80);  //when screen resized it works for snowflake at -800 
+        setStartY(window.innerHeight/2);  //tree was set at height - 80 
 
     });
 
@@ -38,9 +39,9 @@ const App = () => {
     return (
         <div>
             <FractalContext.Provider value={{width, height, startX, startY, edgeLength, leftLengthMultiplier, 
-                rightLengthMultiplier, angleIncrement, lineWidth, mainColor, branchNumber, drawX, drawY,
+                rightLengthMultiplier, angleIncrement, lineWidth, mainColor, branchNumber, limit,
                 setEdgeLength, setLeftLengthMultiplier, setRightLengthMultiplier, setAngleIncrement, 
-                setLineWidth, setMainColor, setBranchNumber }}>
+                setLineWidth, setMainColor, setBranchNumber, setLimit }}>
                 <ControlPanel />
                 { mode === 'tree' ? <HTree /> : <KochSnowflake />}
             </FractalContext.Provider>
