@@ -11,7 +11,6 @@ const App = () => {
     const [height, setHeight] = useState(window.innerHeight);
     const [startX, setStartX] = useState(window.innerWidth/3);
     const [startY, setStartY] = useState(window.innerHeight/2);
-    console.log("X: " + startX + " Y: " + startY) //Start Y must be at least -200 for snowflake
 
     const [edgeLength, setEdgeLength] = useState(120);
     const [leftLengthMultiplier, setLeftLengthMultiplier] = useState(0.75);
@@ -26,8 +25,7 @@ const App = () => {
     window.addEventListener('resize', () => {
         setWidth(window.innerWidth);
         setHeight(window.innerHeight);
-        setStartX(window.innerWidth/2);
-        setStartY(window.innerHeight - 80);
+
     });
 
     let mode = "not tree"
@@ -37,7 +35,7 @@ const App = () => {
             <FractalContext.Provider value={{width, height, startX, startY, edgeLength, leftLengthMultiplier, 
                 rightLengthMultiplier, angleIncrement, lineWidth, mainColor, branchNumber,
                 setEdgeLength, setLeftLengthMultiplier, setRightLengthMultiplier, setAngleIncrement, 
-                setLineWidth, setMainColor, setBranchNumber }}>
+                setLineWidth, setMainColor, setBranchNumber, setStartX, setStartY }}>
                 <ControlPanel />
                 { mode === 'tree' ? <HTree /> : <KochSnowflake />}
             </FractalContext.Provider>
