@@ -54,18 +54,18 @@ function KochSnowflake() {
     mainColor } = useContext(FractalContext);
   
 
-  let startingPoints = {    //add startX and startY to move around snowflakes
+  let startingPoints = {
     p1: {
-      x: startX,
-      y: startY - edgeLength
+      x: 0,
+      y: -edgeLength
     },
     p2: {
-      x: startX + edgeLength,
-      y: startY + 2 * edgeLength / 3
+      x: edgeLength,
+      y: 2 * edgeLength / 3
     },
     p3: {
-      x: startX - edgeLength,
-      y: startY + 2 * edgeLength / 3
+      x: - edgeLength,
+      y: 2 * edgeLength / 3
     }
   }
 
@@ -73,7 +73,7 @@ function KochSnowflake() {
 
   useEffect(() => {
     const ctx = canvasElement.current.getContext('2d');
-
+    console.log("X: " + startX + " Y: " + startY)
     startingPoints = {
       p1: {
         x: 0,
@@ -88,7 +88,9 @@ function KochSnowflake() {
         y: 2 * edgeLength / 3
       }
     }
-    console.log("Start points p1: ( " + p1.x + ", " + p1.y + " ), ( " + p2.x + ", " + p2.y + " ), ( " + p3.x + ", " + p3.y + " )")
+    console.log("Start points p1: ( " + startingPoints.p1.x + ", " + startingPoints.p1.y + " ), ( "
+     + startingPoints.p2.x + ", " + startingPoints.p2.y + " ), ( " 
+     + startingPoints.p3.x + ", " + startingPoints.p3.y + " )");
 
     ctx.clearRect(0, 0, canvasElement.current.width, canvasElement.current.height);
 
@@ -97,7 +99,7 @@ function KochSnowflake() {
     ctx.strokeStyle = mainColor;
     //ctx.fillStyle = secondaryColor;
     ctx.lineWidth = lineWidth;
-    ctx.translate(startX, -startY);
+    ctx.translate(startX, startY);
     //ctx.rotate(angle * Math.PI / 180);
     ctx.moveTo(0, 0);
 

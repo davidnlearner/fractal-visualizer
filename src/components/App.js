@@ -12,6 +12,9 @@ const App = () => {
     const [startX, setStartX] = useState(window.innerWidth/3);
     const [startY, setStartY] = useState(window.innerHeight/2);
 
+    const [drawX, setDrawX] = useState(window.innerWidth/3);
+    const [drawY, setDrawY] = useState(window.innerHeight/2);
+
     const [edgeLength, setEdgeLength] = useState(120);
     const [leftLengthMultiplier, setLeftLengthMultiplier] = useState(0.75);
     const [rightLengthMultiplier, setRightLengthMultiplier] = useState(0.75);
@@ -25,6 +28,8 @@ const App = () => {
     window.addEventListener('resize', () => {
         setWidth(window.innerWidth);
         setHeight(window.innerHeight);
+        setStartX(window.innerWidth/2);
+        setStartY(window.innerHeight - 80);  //when screen resized it works for snowflake at -800 
 
     });
 
@@ -33,9 +38,9 @@ const App = () => {
     return (
         <div>
             <FractalContext.Provider value={{width, height, startX, startY, edgeLength, leftLengthMultiplier, 
-                rightLengthMultiplier, angleIncrement, lineWidth, mainColor, branchNumber,
+                rightLengthMultiplier, angleIncrement, lineWidth, mainColor, branchNumber, drawX, drawY,
                 setEdgeLength, setLeftLengthMultiplier, setRightLengthMultiplier, setAngleIncrement, 
-                setLineWidth, setMainColor, setBranchNumber, setStartX, setStartY }}>
+                setLineWidth, setMainColor, setBranchNumber }}>
                 <ControlPanel />
                 { mode === 'tree' ? <HTree /> : <KochSnowflake />}
             </FractalContext.Provider>

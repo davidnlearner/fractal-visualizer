@@ -22,16 +22,6 @@ const ControlPanel = () => {
                 onChange={(e) => context.setLineWidth(e.target.value)} className="slider"
                 id="line-width-slider" name='line-width' />
 
-            <label htmlFor='startX'>Start X: {context.startX}</label>
-            <input type="range" min="-800" max="800" value={context.startX}
-                onChange={(e) => context.setStartX(e.target.value)} className="slider"
-                id="startX-slider" name='startX' />
-                
-            <label htmlFor='startY'>Start Y: {context.startY}</label>
-            <input type="range" min="-800" max="800" value={context.startY}
-                onChange={(e) => context.setStartY(e.target.value)} className="slider"
-                id="startY-slider" name='startY' />
-
             { mode === 'tree' &&
                 <>
                     <label htmlFor='left-length-multiplier'>leftLengthMultiplier: {context.leftLengthMultiplier}</label>
@@ -62,3 +52,16 @@ const ControlPanel = () => {
 }
 
 export default ControlPanel;
+
+
+/**
+ <label htmlFor='drawX'>draw X: {context.drawX}</label>
+ <input type="range" min="-800" max="800" value={context.drawX}
+     onChange={(e) => context.setDrawX(e.target.value)} className="slider"
+     id="drawX-slider" name='drawX' />
+
+ <label htmlFor='drawY'>draw Y: {context.drawY}</label>
+ <input type="range" min="-800" max="800" value={context.drawY}
+     onChange={(e) => context.setDrawY(e.target.value)} className="slider"
+     id="drawY-slider" name='drawY' />
+ */
