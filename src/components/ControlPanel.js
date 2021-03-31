@@ -1,13 +1,18 @@
 import { useContext } from 'react';
 import { FractalContext } from "../FractalContext";
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 
 const ControlPanel = () => {
-    const mode = " not tree";
-
     const context = useContext(FractalContext);
+
+    const fractals = ['tree', 'snowflake'];
 
     return (
         <div className="slide-container">
+            <label htmlFor='fractal-type'>Fractal type:</label>
+            <Dropdown options={fractals} onChange={(e) => context.setFractalType(e.value)} 
+                value={context.fractalType} id='fractal-type-dropdown' name='fractal-type'/>
 
             <label htmlFor='main-color'>mainColor: {context.mainColor}</label>
             <input type="color" value={context.mainColor}
@@ -18,15 +23,15 @@ const ControlPanel = () => {
                 onChange={(e) => context.setEdgeLength(e.target.value)} className="slider"
                 id="edge-length-slider" name='edge-length' />
             <label htmlFor='line-width'>Line Width: {context.lineWidth}</label>
-            <input type="range" min="1" max="10" value={context.lineWidth}
+            <input type="range" min="1" max="30" value={context.lineWidth}
                 onChange={(e) => context.setLineWidth(e.target.value)} className="slider"
                 id="line-width-slider" name='line-width' />
             <label htmlFor='limit'>Recursions: {context.limit}</label>
-            <input type="range" min="0" max="8" value={context.limit}
+            <input type="range" min="0" max="6" value={context.limit}
                 onChange={(e) => context.setLimit(e.target.value)} className="slider"
                 id="limit-slider" name='limit' />
 
-            { mode === 'tree' &&
+            { context.fractalType === 'tree' &&
                 <>
                     <label htmlFor='left-length-multiplier'>leftLengthMultiplier: {context.leftLengthMultiplier}</label>
                     <input type="range" min="0.25" max="0.95" step="0.05" value={context.leftLengthMultiplier}
@@ -40,11 +45,7 @@ const ControlPanel = () => {
                     <input type="range" min="1" max="180" value={context.angleIncrement}
                         onChange={(e) => context.setAngleIncrement(e.target.value)} className="slider"
                         id="angle-increment-slider" name='angle-increment' />
-
-                    <label htmlFor='branch-number'>Branch Number: {context.branchNumber}</label>
-                    <input type="range" min="2" max="10" value={context.branchNumber}
-                        onChange={(e) => context.setBranchNumber(e.target.value)} className="slider"
-                        id="branch-number-slider" name='branch-number' />
+                    
                 </>
             }
 

@@ -10,18 +10,16 @@ const App = () => {
     const [width, setWidth] = useState(window.innerWidth);
     const [height, setHeight] = useState(window.innerHeight);
     const [startX, setStartX] = useState(window.innerWidth/2);
-    const [startY, setStartY] = useState(window.innerHeight/2);
+    const [startY, setStartY] = useState(window.innerHeight - 80);
 
-    const [drawX, setDrawX] = useState(window.innerWidth/3);
-    const [drawY, setDrawY] = useState(window.innerHeight/2);
+    const [fractalType, setFractalType] = useState("tree");
 
     const [edgeLength, setEdgeLength] = useState(120);
     const [leftLengthMultiplier, setLeftLengthMultiplier] = useState(0.75);
     const [rightLengthMultiplier, setRightLengthMultiplier] = useState(0.75);
-    const [angleIncrement, setAngleIncrement] = useState(5);
+    const [angleIncrement, setAngleIncrement] = useState(20);
     const [lineWidth, setLineWidth] = useState(2);
     const [mainColor, setMainColor] = useState('#4e2b0f');
-    const [branchNumber, setBranchNumber] = useState(2);
     const [limit, setLimit] = useState(2);
 
 
@@ -30,20 +28,22 @@ const App = () => {
         setWidth(window.innerWidth);
         setHeight(window.innerHeight);
         setStartX(window.innerWidth/2);
-        setStartY(window.innerHeight/2);  //tree was set at height - 80 
+        if (fractalType === "tree") {
+            setStartY(window.innerHeight - 80);
+        } else {
+            setStartY(window.innerHeight/2);
+        }
 
     });
-
-    let mode = "not tree"
 
     return (
         <div>
             <FractalContext.Provider value={{width, height, startX, startY, edgeLength, leftLengthMultiplier, 
-                rightLengthMultiplier, angleIncrement, lineWidth, mainColor, branchNumber, limit,
+                rightLengthMultiplier, angleIncrement, lineWidth, mainColor, limit, fractalType,
                 setEdgeLength, setLeftLengthMultiplier, setRightLengthMultiplier, setAngleIncrement, 
-                setLineWidth, setMainColor, setBranchNumber, setLimit }}>
+                setLineWidth, setMainColor, setLimit, setFractalType }}>
                 <ControlPanel />
-                { mode === 'tree' ? <HTree /> : <KochSnowflake />}
+                { fractalType === 'tree' ? <HTree /> : <KochSnowflake />}
             </FractalContext.Provider>
         </div>
     )

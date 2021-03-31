@@ -45,7 +45,6 @@ const drawSnowflake = ({ ctx, startPoint, endPoint, lineWidth = 2, mainColor = '
   }
 }
 
-
 function KochSnowflake() {
   const canvasElement = useRef(null);
 
@@ -70,9 +69,16 @@ function KochSnowflake() {
   }
 
 
-
   useEffect(() => {
     const ctx = canvasElement.current.getContext('2d');
+    
+    const bgColors = { "Default": "#81b71a",
+                    "Blue": "#00B1E1",
+                    "Cyan": "#37BC9B",
+                    "Green": "#8CC152",
+                    "Red": "#E9573F",
+                    "Yellow": "#F6BB42",
+                    };
 
     startingPoints = {
       p1: {
@@ -89,15 +95,14 @@ function KochSnowflake() {
       }
     }
 
+    ctx.restore();
     ctx.clearRect(0, 0, canvasElement.current.width, canvasElement.current.height);
-
     ctx.beginPath();
     ctx.save();
     ctx.strokeStyle = mainColor;
     //ctx.fillStyle = secondaryColor;
     ctx.lineWidth = lineWidth;
     ctx.translate(startX, startY);
-    //ctx.rotate(angle * Math.PI / 180);
     ctx.moveTo(0, 0);
 
     drawSnowflake({ctx, startPoint: startingPoints.p1, endPoint: startingPoints.p2, lineWidth, mainColor, limit})
@@ -114,3 +119,5 @@ function KochSnowflake() {
 }
 
 export default KochSnowflake;
+
+//style={{backgroundColor: '#'+(Math.random()*0xFFFFFF<<0).toString(16)}}
