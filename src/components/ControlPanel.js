@@ -21,8 +21,8 @@ const ControlPanel = () => {
             <Control componentId='edge-length' label='Edge Length' value={context.edgeLength} changeFunction={context.setEdgeLength} controlType="range" min='50' max='300' step='1' />
             <Control componentId='line-width' label='Line Width' value={context.lineWidth} changeFunction={context.setLineWidth} controlType="range" min='1' max='30' step='1' />
             <Control componentId='limit' label='Recursions' value={context.limit} changeFunction={context.setLimit} controlType="range" min='0' max='6' step='1' fractalTypes={['snowflake']}/>
-            <Control componentId='left-length-multiplier' label='Left Length Multiplier' value={context.leftLengthMultiplier} changeFunction={context.setLeftLengthMultiplier} controlType="range" min='0.25' max='0.95' step='0.5' fractalTypes={['tree']}/>
-            <Control componentId='right-length-multiplier' label='Right Length Multiplier' value={context.rightLengthMultiplier} changeFunction={context.setRightLengthMultiplier} controlType="range" min='0.25' max='0.95' step='0.5' fractalTypes={['tree']}/>
+            <Control componentId='left-length-multiplier' label='Left Length Multiplier' value={context.leftLengthMultiplier} changeFunction={context.setLeftLengthMultiplier} controlType="range" min='0.25' max='0.95' step='0.05' fractalTypes={['tree']}/>
+            <Control componentId='right-length-multiplier' label='Right Length Multiplier' value={context.rightLengthMultiplier} changeFunction={context.setRightLengthMultiplier} controlType="range" min='0.25' max='0.95' step='0.05' fractalTypes={['tree']}/>
             <Control componentId='angle-increment' label='Angle Increment' value={context.angleIncrement} changeFunction={context.setAngleIncrement} controlType="range" min='1' max='45' step='1' fractalTypes={['tree']}/>
 
         </div>
