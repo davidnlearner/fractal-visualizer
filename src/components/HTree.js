@@ -1,17 +1,21 @@
-import { useRef, useState, useEffect, useContext } from 'react';
+import { useRef, useEffect, useContext } from 'react';
 import { FractalContext } from "../FractalContext";
+import {scaleLinear} from 'd3-scale';
 
+//const colorScale = scaleLinear().domain([5, 0]);
 
-const drawTree = ({ ctx, startX = 300, startY = 220, edgeLength = 120, leftLengthMultiplier = 0.75, rightLengthMultiplier = 0.75, angle = 0, angleIncrement = 10, lineWidth = 2, mainColor = '#4e2b0f', secondaryColor = 'green', limit = 20, branchNumber = 2 }) => {
+const drawTree = ({ ctx, startX = 300, startY = 220, edgeLength = 120, leftLengthMultiplier = 0.75, rightLengthMultiplier = 0.75, angle = 0, angleIncrement = 10, lineWidth = 2, mainColor = '#4e2b0f', secondaryColor = 'green', limit = 8, branchNumber = 2 }) => {
   ctx.beginPath();
   ctx.save();
   ctx.strokeStyle = mainColor;
   ctx.fillStyle = secondaryColor;
   ctx.lineWidth = lineWidth;
+  ctx.shadowBlur = 2;
+  ctx.shadowColor = 'white';
   ctx.translate(startX, startY);
   ctx.rotate(angle * Math.PI / 180);
   ctx.moveTo(0, 0);
-  //ctx.bezierCurveTo(20, -edgeLength/2, 40, -edgeLength/2, 0, -edgeLength)
+  ctx.bezierCurveTo(0, -edgeLength/2, 0, -edgeLength/2, 0, -edgeLength)
   //const drawLength = stepCounter === 0 ? 0 : -edgeLength;
   ctx.lineTo(0, -edgeLength);
   ctx.stroke();
@@ -38,15 +42,15 @@ function HTree() {
 
   const { width, height, startX, startY, edgeLength, leftLengthMultiplier,
     rightLengthMultiplier, angleIncrement, lineWidth,
-    mainColor } = useContext(FractalContext);
+    mainColor, secondaryColor } = useContext(FractalContext);
 
   useEffect(() => {
     const ctx = canvasElement.current.getContext('2d');
 
     ctx.clearRect(0, 0, canvasElement.current.width, canvasElement.current.height);
-    drawTree({ ctx, startX, startY, edgeLength, leftLengthMultiplier, rightLengthMultiplier, angleIncrement: parseInt(angleIncrement), lineWidth, mainColor });
+    drawTree({ ctx, startX, startY, edgeLength, leftLengthMultiplier, rightLengthMultiplier, angleIncrement: parseInt(angleIncrement), lineWidth, mainColor, secondaryColor });
 
-  }, [startX, startY, edgeLength, leftLengthMultiplier, rightLengthMultiplier, angleIncrement, lineWidth, mainColor])
+  }, [startX, startY, edgeLength, leftLengthMultiplier, rightLengthMultiplier, angleIncrement, lineWidth, mainColor, secondaryColor])
 
 
   return (

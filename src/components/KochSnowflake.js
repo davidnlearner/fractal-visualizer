@@ -5,7 +5,6 @@ import { FractalContext } from "../FractalContext"
 
 const drawSnowflake = ({ ctx, startPoint, endPoint, lineWidth = 2, mainColor = '#4e2b0f', secondaryColor = 'green', limit = 1 }) => {
 
-  //a = start point   b = end point
   let [dx, dy] = [endPoint.x - startPoint.x, endPoint.y - startPoint.y]
   let dist = Math.sqrt(dx * dx + dy * dy)
   let unit = dist / 3
@@ -80,18 +79,19 @@ function KochSnowflake() {
                     "Yellow": "#F6BB42",
                     };
 
+    const dist = Number.parseInt(edgeLength);
     startingPoints = {
       p1: {
         x: 0,
-        y: - edgeLength
+        y: -dist
       },
       p2: {
-        x: edgeLength,
-        y: 2 * edgeLength / 3
+        x: dist,
+        y: 2 * dist / 3
       },
       p3: {
-        x: -edgeLength,
-        y: 2 * edgeLength / 3
+        x: -dist,
+        y: 2 * dist / 3
       }
     }
 

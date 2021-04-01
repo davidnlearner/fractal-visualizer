@@ -1,5 +1,4 @@
-import '../App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import HTree from "./HTree";
 import KochSnowflake from "./KochSnowflake";
@@ -18,8 +17,9 @@ const App = () => {
     const [leftLengthMultiplier, setLeftLengthMultiplier] = useState(0.75);
     const [rightLengthMultiplier, setRightLengthMultiplier] = useState(0.75);
     const [angleIncrement, setAngleIncrement] = useState(20);
-    const [lineWidth, setLineWidth] = useState(2);
+    const [lineWidth, setLineWidth] = useState(15);
     const [mainColor, setMainColor] = useState('#4e2b0f');
+    const [secondaryColor, setSecondaryColor] = useState('#228B22')
     const [limit, setLimit] = useState(2);
 
 
@@ -36,12 +36,22 @@ const App = () => {
 
     });
 
+    useEffect(() => {
+        if (fractalType === "tree") {
+            setStartY(window.innerHeight - 80);
+            setLineWidth(15);
+        } else {
+            setStartY(window.innerHeight/2);
+            setLineWidth(2);
+        }
+    }, [fractalType])
+
     return (
         <div>
             <FractalContext.Provider value={{width, height, startX, startY, edgeLength, leftLengthMultiplier, 
-                rightLengthMultiplier, angleIncrement, lineWidth, mainColor, limit, fractalType,
+                rightLengthMultiplier, angleIncrement, lineWidth, mainColor, secondaryColor, limit, fractalType,
                 setEdgeLength, setLeftLengthMultiplier, setRightLengthMultiplier, setAngleIncrement, 
-                setLineWidth, setMainColor, setLimit, setFractalType }}>
+                setLineWidth, setMainColor, setSecondaryColor, setLimit, setFractalType }}>
                 <ControlPanel />
                 { fractalType === 'tree' ? <HTree /> : <KochSnowflake />}
             </FractalContext.Provider>
