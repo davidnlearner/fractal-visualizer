@@ -1,5 +1,4 @@
-import { tree } from 'd3-hierarchy';
-import { useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import { FractalContext } from "../FractalContext";
 
 const Control = ({componentId, label, value, changeFunction, controlType, min=undefined, max=undefined, step=undefined, fractalTypes=['tree', 'snowflake'] }) => {

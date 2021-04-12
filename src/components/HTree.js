@@ -1,8 +1,5 @@
 import { useRef, useEffect, useContext } from 'react';
 import { FractalContext } from "../FractalContext";
-import {scaleLinear} from 'd3-scale';
-
-//const colorScale = scaleLinear().domain([5, 0]);
 
 const drawTree = ({ ctx, startX = 300, startY = 220, edgeLength = 120, leftLengthMultiplier = 0.75, rightLengthMultiplier = 0.75, angle = 0, angleIncrement = 10, lineWidth = 2, mainColor = '#4e2b0f', secondaryColor = 'green', limit = 8, branchNumber = 2 }) => {
   ctx.beginPath();
@@ -10,12 +7,13 @@ const drawTree = ({ ctx, startX = 300, startY = 220, edgeLength = 120, leftLengt
   ctx.strokeStyle = mainColor;
   ctx.fillStyle = secondaryColor;
   ctx.lineWidth = lineWidth;
+  ctx.lineCap = "round";
   ctx.shadowBlur = 2;
   ctx.shadowColor = 'white';
   ctx.translate(startX, startY);
   ctx.rotate(angle * Math.PI / 180);
   ctx.moveTo(0, 0);
-  ctx.bezierCurveTo(0, -edgeLength/2, 0, -edgeLength/2, 0, -edgeLength)
+  ctx.bezierCurveTo(0, -edgeLength / 2, 0, -edgeLength / 2, 0, -edgeLength)
   //const drawLength = stepCounter === 0 ? 0 : -edgeLength;
   ctx.lineTo(0, -edgeLength);
   ctx.stroke();
@@ -42,7 +40,7 @@ function HTree() {
 
   const { width, height, startX, startY, edgeLength, leftLengthMultiplier,
     rightLengthMultiplier, angleIncrement, lineWidth,
-    mainColor, secondaryColor } = useContext(FractalContext);
+    mainColor, secondaryColor, backgroundColor } = useContext(FractalContext);
 
   useEffect(() => {
     const ctx = canvasElement.current.getContext('2d');
@@ -52,14 +50,14 @@ function HTree() {
 
   }, [startX, startY, edgeLength, leftLengthMultiplier, rightLengthMultiplier, angleIncrement, lineWidth, mainColor, secondaryColor])
 
+  useEffect(() => {
+      canvasElement.current.style.backgroundColor = backgroundColor;
+  }, [backgroundColor])
 
   return (
 
     <div className="canvas-wrapper">
       <canvas width={width} height={height} ref={canvasElement}></canvas>
-      <button className="generate-tree-button" onClick={() => drawTree({ ctx: canvasElement.current.getContext('2d'), startX, startY, edgeLength, lineWidth, mainColor })}>
-        Generate Random Tree
-        </button>
     </div>
   );
 }

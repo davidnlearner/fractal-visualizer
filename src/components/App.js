@@ -19,9 +19,9 @@ const App = () => {
     const [angleIncrement, setAngleIncrement] = useState(20);
     const [lineWidth, setLineWidth] = useState(15);
     const [mainColor, setMainColor] = useState('#4e2b0f');
-    const [secondaryColor, setSecondaryColor] = useState('#228B22')
+    const [secondaryColor, setSecondaryColor] = useState('#228B22');
+    const [backgroundColor, setBackgroundColor] = useState('#000000');
     const [limit, setLimit] = useState(2);
-
 
     
     window.addEventListener('resize', () => {
@@ -40,18 +40,19 @@ const App = () => {
         if (fractalType === "tree") {
             setStartY(window.innerHeight - 80);
             setLineWidth(15);
+            setEdgeLength(Math.min(200, edgeLength));
         } else {
             setStartY(window.innerHeight/2);
             setLineWidth(2);
         }
-    }, [fractalType])
+    }, [fractalType, edgeLength])
 
     return (
         <div>
             <FractalContext.Provider value={{width, height, startX, startY, edgeLength, leftLengthMultiplier, 
-                rightLengthMultiplier, angleIncrement, lineWidth, mainColor, secondaryColor, limit, fractalType,
+                rightLengthMultiplier, angleIncrement, lineWidth, mainColor, secondaryColor, backgroundColor, limit, fractalType,
                 setEdgeLength, setLeftLengthMultiplier, setRightLengthMultiplier, setAngleIncrement, 
-                setLineWidth, setMainColor, setSecondaryColor, setLimit, setFractalType }}>
+                setLineWidth, setMainColor, setSecondaryColor, setBackgroundColor, setLimit, setFractalType }}>
                 <ControlPanel />
                 { fractalType === 'tree' ? <HTree /> : <KochSnowflake />}
             </FractalContext.Provider>

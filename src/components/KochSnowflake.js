@@ -34,14 +34,12 @@ const drawSnowflake = ({ ctx, startPoint, endPoint, lineWidth = 2, mainColor = '
     drawSnowflake({ctx, startPoint: p2, endPoint: p3, lineWidth, mainColor, secondaryColor, limit});
     drawSnowflake({ctx, startPoint: p3, endPoint, lineWidth, mainColor, secondaryColor, limit});
   } else {
-    ctx.beginPath()
-    ctx.moveTo(startPoint.x, startPoint.y)
     ctx.lineTo(p1.x, p1.y)
     ctx.lineTo(p2.x, p2.y)
     ctx.lineTo(p3.x, p3.y)
     ctx.lineTo(endPoint.x, endPoint.y)
-    ctx.stroke()
   }
+
 }
 
 function KochSnowflake() {
@@ -49,7 +47,7 @@ function KochSnowflake() {
 
   
   const { width, height, startX, startY, edgeLength, lineWidth,
-    mainColor, limit } = useContext(FractalContext);
+    mainColor, secondaryColor, backgroundColor, limit } = useContext(FractalContext);
   
 
   let startingPoints = {
@@ -70,14 +68,6 @@ function KochSnowflake() {
 
   useEffect(() => {
     const ctx = canvasElement.current.getContext('2d');
-    
-    const bgColors = { "Default": "#81b71a",
-                    "Blue": "#00B1E1",
-                    "Cyan": "#37BC9B",
-                    "Green": "#8CC152",
-                    "Red": "#E9573F",
-                    "Yellow": "#F6BB42",
-                    };
 
     const dist = Number.parseInt(edgeLength);
     startingPoints = {
@@ -100,16 +90,27 @@ function KochSnowflake() {
     ctx.beginPath();
     ctx.save();
     ctx.strokeStyle = mainColor;
-    //ctx.fillStyle = secondaryColor;
+    ctx.fillStyle = secondaryColor;
     ctx.lineWidth = lineWidth;
     ctx.translate(startX, startY);
-    ctx.moveTo(0, 0);
+    ctx.moveTo(startingPoints.p1.x, startingPoints.p1.y)
 
-    drawSnowflake({ctx, startPoint: startingPoints.p1, endPoint: startingPoints.p2, lineWidth, mainColor, limit})
-    drawSnowflake({ctx, startPoint: startingPoints.p2, endPoint: startingPoints.p3, lineWidth, mainColor, limit})
-    drawSnowflake({ctx, startPoint: startingPoints.p3, endPoint: startingPoints.p1, lineWidth, mainColor, limit})
 
-  }, [startX, startY, edgeLength, lineWidth, mainColor, limit])
+    drawSnowflake({ctx, startPoint: startingPoints.p1, endPoint: startingPoints.p2, lineWidth, mainColor, secondaryColor, limit})
+    drawSnowflake({ctx, startPoint: startingPoints.p2, endPoint: startingPoints.p3, lineWidth, mainColor, secondaryColor, limit})
+    drawSnowflake({ctx, startPoint: startingPoints.p3, endPoint: startingPoints.p1, lineWidth, mainColor, secondaryColor, limit})
+
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+
+  }, [startX, startY, edgeLength, lineWidth, mainColor, secondaryColor, limit])
+
+  
+  useEffect(() => {
+    canvasElement.current.style.backgroundColor = backgroundColor;
+}, [backgroundColor])
 
   return (
     <div className="canvas-wrapper">

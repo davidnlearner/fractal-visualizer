@@ -2,22 +2,17 @@ canvas {
     position: absolute;
     background: black;
 }
-  
-.generate-tree-button {
+
+
+.randomize-button {
     cursor: pointer;
     outline: none;
     border: none;
-    position: absolute;
-    /* left: 0; */
-    left: 50%;
-    bottom: 5%;
-    z-index: 10;
-    transform: translate(-50%, 0);
-    padding: 20px 30px;
+    padding: 10px 15px;
     border-radius: 50px;
-    background: rgb(78, 43, 15);
     color: black;
-    font-size: 1.2rem;
-    width: 300px;
-    overflow: hidden;
+    font-size: 1rem;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
 }
